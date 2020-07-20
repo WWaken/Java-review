@@ -3,6 +3,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -33,9 +34,17 @@ public class LoginServlet extends HttpServlet {
         //进行用户名，密码的校验
         PrintWriter pw = resp.getWriter();
         if("asd".equalsIgnoreCase(username) && "123".equalsIgnoreCase(password)){
-            pw.print("<p>登陆成功</p>");
+            //pw.print("<p>登陆成功</p>");
+            //默认创建一个session对象
+            HttpSession session = req.getSession();
+            session.setAttribute("user" ,"username = " + username);
+            //重定向
+           resp.sendRedirect(req.getContextPath()+ "/main.html");
+           //resp.sendRedirect("https://www.baidu.com");
         }else{
-            pw.print("<p>登陆失败</p>");
+       //     pw.print("<p>用户名或密码输入错误，登陆失败</p>");
+            //转发
+            req.getRequestDispatcher("/index.html").forward(req,resp);
         }
         pw.flush();
     }
