@@ -93,6 +93,7 @@ public class SortTest {
         }
     }
 
+
     public static void main(String[] args) {
         int[] arrar = {9,7,2,5,3,10};
         //insertSort(arrar);
