@@ -65,7 +65,7 @@ public class SortTest {
         for(int i = 0; i < array.length - 1; i++){
             swap(array,0,array.length - 1 - i);
             System.out.println("交换后" + i + "顺序为" + Arrays.toString(array) );
-            shiftDown(array, array.length, 0);
+            shiftDown(array, array.length - 1 -i, 0);
             System.out.println("向下调整后" + i + "顺序为" + Arrays.toString(array) );
         }
     }
@@ -93,13 +93,33 @@ public class SortTest {
         }
     }
 
+    public static void bubbleSort(int[] array){
+        for(int i = 0; i < array.length - 1; i++){
+            for(int j = 0;j < array.length - i - 1; j++){
+                if(array[j] > array[j+1]){
+                    swap(array,j,j+1);
+                }
+            }
+        }
+    }
+
+//    public static void bubbleSort(int[] array){
+//        for(int i = 0; i < array.length;i++){
+//            for(int j = array.length - 1; j > i;j--){
+//                if(array[j] < array[j-1]){
+//                    swap(array,j-1,j);
+//                }
+//            }
+//        }
+//    }
 
     public static void main(String[] args) {
         int[] arrar = {9,7,2,5,3,10};
         //insertSort(arrar);
         //shellSort(arrar);
         //selectSort(arrar);
-        heapSort(arrar);
+        //heapSort(arrar);
+        bubbleSort(arrar);
         System.out.println(Arrays.toString(arrar));
     }
 }
