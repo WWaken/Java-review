@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.Stack;
 
 /**
  * @ClassName: SortTest
@@ -135,6 +136,29 @@ public class SortTest {
         quickSortHelper(array,index + 1,right);
     }
 
+    //非递归版本的快排，借助栈
+    public static void notQuickSort(int[] array){
+        Stack<Integer> stack = new Stack<>();
+        stack.push(0);
+        stack.push(array.length - 1);
+
+        while(!stack.isEmpty()){
+            int right = stack.pop();
+            int left = stack.pop();
+
+            if(left >= right){
+                continue;
+            }
+            int index = partition(array,left,right);
+
+            stack.push(left);
+            stack.push(index - 1);
+
+            stack.push(index + 1);
+            stack.push(right);
+        }
+    }
+
     private static int partition(int[] array, int left, int right) {
         int i = left;
         int j = right;
@@ -208,7 +232,8 @@ public class SortTest {
         //heapSort(arrar);
         //bubbleSort(arrar);
         //quickSort(arrar);
-        mergeSort(arrar);
+        notQuickSort(arrar);
+        //mergeSort(arrar);
         System.out.println(Arrays.toString(arrar));
     }
 
