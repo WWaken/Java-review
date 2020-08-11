@@ -95,10 +95,17 @@ public class SortTest {
 
     public static void bubbleSort(int[] array){
         for(int i = 0; i < array.length - 1; i++){
+            int flag = 0;
             for(int j = 0;j < array.length - i - 1; j++){
                 if(array[j] > array[j+1]){
                     swap(array,j,j+1);
+                    flag += 1;
+                    System.out.println(flag);
                 }
+            }
+            if(flag == 0){
+                System.out.println(flag);
+                break;
             }
         }
     }
@@ -113,13 +120,96 @@ public class SortTest {
 //        }
 //    }
 
+    //递归实现快排
+    public static void quickSort(int[] array){
+        quickSortHelper(array,0,array.length-1);
+    }
+
+    private static void quickSortHelper(int[] array, int left, int right) {
+        if(left >= right){
+            return;
+        }
+        //index是left和right的重合位置，知道这个位置就可以进行递归
+        int index = partition(array,left,right);
+        quickSortHelper(array,left,index - 1);
+        quickSortHelper(array,index + 1,right);
+    }
+
+    private static int partition(int[] array, int left, int right) {
+        int i = left;
+        int j = right;
+        int base = array[right];
+        while(i < j){
+            while(i < j && array[i] <= base){
+                i++;
+            }
+            while(i < j && array[j] >= base){
+                j--;
+            }
+            swap(array,i,j);
+        }
+        swap(array,i, right);
+        return i;
+    }
+
+    public static void mergeSort(int[] array) {
+        mergeSortHelper(array,0,array.length);
+    }
+
+    private static void mergeSortHelper(int[] array,int left, int right) {
+        if(right - left <= 1){
+            return;
+        }
+        int mid = (left + right)/2;
+        mergeSortHelper(array,left,mid);
+        mergeSortHelper(array,mid,right);
+
+        merge(array, left, mid, right);
+    }
+
+    private static void merge(int[] array, int low, int mid, int high) {
+        int[] output = new int[high - low];
+        int outputIndex = 0;
+        int cur1 = low;
+        int cur2 = mid;
+
+            while(cur1 < mid && cur2 < high){
+                if(array[cur1] <= array[cur2]){
+                    output[outputIndex] = array[cur1];
+                    outputIndex++;
+                    cur1++;
+                }else{
+                    output[outputIndex] = array[cur2];
+                    outputIndex++;
+                    cur2++;
+                }
+            }
+            while (cur1 < mid) {
+                output[outputIndex] = array[cur1];
+                outputIndex++;
+                cur1++;
+            }
+            while(cur2 < high){
+                output[outputIndex] = array[cur2];
+                outputIndex++;
+                cur2++;
+            }
+        for (int i = 0; i < high - low; i++) {
+            array[low+i] = output[i];
+        }
+    }
+
     public static void main(String[] args) {
-        int[] arrar = {9,7,2,5,3,10};
+        int[] arrar = {9,5,2,7,3,6,8};
+        //int[] arrar = {1,2,3,4,5,6};
         //insertSort(arrar);
         //shellSort(arrar);
         //selectSort(arrar);
         //heapSort(arrar);
-        bubbleSort(arrar);
+        //bubbleSort(arrar);
+        //quickSort(arrar);
+        mergeSort(arrar);
         System.out.println(Arrays.toString(arrar));
     }
+
 }
