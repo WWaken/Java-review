@@ -223,6 +223,24 @@ public class SortTest {
         }
     }
 
+    public static void mergeSortByLoop(int[] array){
+
+        for(int gap = 1; gap < array.length; gap *= 2){
+            for(int i = 0; i < array.length; i += gap*2){
+                int left = i;
+                int mid = i + gap;
+                int right = i + 2*gap;
+                if(mid > array.length){
+                    mid = array.length;
+                }
+                if(array.length < right){
+                    right = array.length;
+                }
+                merge(array,left,mid,right);
+            }
+        }
+    }
+
     public static void main(String[] args) {
         int[] arrar = {9,5,2,7,3,6,8};
         //int[] arrar = {1,2,3,4,5,6};
@@ -232,8 +250,9 @@ public class SortTest {
         //heapSort(arrar);
         //bubbleSort(arrar);
         //quickSort(arrar);
-        notQuickSort(arrar);
+        //notQuickSort(arrar);
         //mergeSort(arrar);
+        mergeSortByLoop(arrar);
         System.out.println(Arrays.toString(arrar));
     }
 
